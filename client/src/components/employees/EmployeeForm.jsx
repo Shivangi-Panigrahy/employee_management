@@ -71,40 +71,24 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
   };
 
   const handleInputChange = (e) => {
-    const { name, value, files } = e.target;
-
-    if (name === "photo") {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prev) => ({
-          ...prev,
-          photo: reader.result,
-        }));
-      };
-      if (file) reader.readAsDataURL(file);
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (validateForm()) {
       try {
-        if (isEditing) {
-          await dispatch(
-            updateEmployee({ id: formData.id, employeeData: formData })
-          );
-        } else {
-          await dispatch(addEmployee(formData));
-        }
+        isEditing
+          ? await dispatch(
+              updateEmployee({ id: formData.id, employeeData: formData })
+            )
+          : await dispatch(addEmployee(formData));
 
-        // Reset form
+        // Reset form and call onFormSubmit
         setFormData({
           id: null,
           name: "",
@@ -115,8 +99,7 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
           salary: "",
         });
 
-        // Call onFormSubmit if provided
-        if (onFormSubmit) onFormSubmit();
+        onFormSubmit && onFormSubmit();
       } catch (error) {
         console.error("Error:", error);
       }
