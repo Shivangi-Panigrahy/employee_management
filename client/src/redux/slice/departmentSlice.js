@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/api/departments";
+const API_URL = import.meta.env.VITE_API_URL + "departments";
 
-// Async Thunks
 export const fetchDepartments = createAsyncThunk(
   "departments/fetchDepartments",
   async (params = { page: 1, limit: 10 }) => {
@@ -28,7 +27,6 @@ const departmentSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Fetch Departments
       .addCase(fetchDepartments.pending, (state) => {
         state.loading = true;
       })

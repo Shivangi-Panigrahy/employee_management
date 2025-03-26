@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "sonner";
 
-const API_URL = "http://localhost:8000/api/employees";
+const API_URL = import.meta.env.VITE_API_URL + "employees";
 
 export const fetchEmployees = createAsyncThunk(
   "employees/fetch",
@@ -17,11 +18,11 @@ export const addEmployee = createAsyncThunk(
     try {
       const response = await axios.post(API_URL, employeeData);
 
-      // Immediately refetch employees after adding
       dispatch(fetchEmployees({ page: 1, limit: 10 }));
-
+      toast.success("Employee added successfully");
       return response.data;
     } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to add employee");
       return rejectWithValue(error.response.data);
     }
   }
@@ -32,12 +33,11 @@ export const updateEmployee = createAsyncThunk(
   async ({ id, employeeData }, { dispatch, rejectWithValue }) => {
     try {
       await axios.put(`${API_URL}/${id}`, employeeData);
-
-      // Immediately refetch employees after updating
       dispatch(fetchEmployees({ page: 1, limit: 10 }));
-
+      toast.success("Employee updated successfully");
       return { id, ...employeeData };
     } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to update employee");
       return rejectWithValue(error.response.data);
     }
   }
@@ -49,11 +49,11 @@ export const deleteEmployee = createAsyncThunk(
     try {
       await axios.delete(`${API_URL}/${id}`);
 
-      // Immediately refetch employees after deleting
       dispatch(fetchEmployees({ page: 1, limit: 10 }));
-
+      toast.success("Employee deleted successfully");
       return id;
     } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to delete employee");
       return rejectWithValue(error.response.data);
     }
   }

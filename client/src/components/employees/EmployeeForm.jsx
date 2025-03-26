@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addEmployee,
   updateEmployee,
-} from "../../features/Slice/employeeSlice";
-import { fetchDepartments } from "../../features/Slice/departmentSlice";
+} from "../../redux/slice/employeeSlice";
+import { fetchDepartments } from "../../redux/slice/departmentSlice";
 
 function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
   const dispatch = useDispatch();
@@ -23,7 +23,12 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
 
   const [errors, setErrors] = useState({});
 
-  // Update form data when initialData changes
+  const formatDate = (date) => {
+    if (!date) return "";
+    const formattedDate = new Date(date).toISOString().split("T")[0]; 
+    return formattedDate;
+  };
+
   useEffect(() => {
     if (isEditing && initialData) {
       setFormData({
@@ -32,7 +37,7 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
         email: initialData.email || "",
         phone: initialData.phone || "",
         department_id: initialData.department_id || "",
-        dob: initialData.dob || "",
+        dob: formatDate(initialData.dob) || "",
         salary: initialData.salary || "",
       });
     }
@@ -72,10 +77,27 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    const formattedValue = name === "dob" ? formatDate(value) : value;
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: formattedValue,
     }));
+  };
+
+  const resetForm = () => {
+    setFormData({
+      id: null,
+      name: "",
+      email: "",
+      phone: "",
+      department_id: "",
+      dob: "",
+      salary: "",
+    });
+    setErrors({});
+    onFormSubmit && onFormSubmit();
   };
 
   const handleSubmit = async (e) => {
@@ -87,19 +109,7 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
               updateEmployee({ id: formData.id, employeeData: formData })
             )
           : await dispatch(addEmployee(formData));
-
-        // Reset form and call onFormSubmit
-        setFormData({
-          id: null,
-          name: "",
-          email: "",
-          phone: "",
-          department_id: "",
-          dob: "",
-          salary: "",
-        });
-
-        onFormSubmit && onFormSubmit();
+        resetForm();
       } catch (error) {
         console.error("Error:", error);
       }
@@ -108,23 +118,12 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
 
   return (
     <div>
-      {/* Error message display */}
-      {error && (
-        <div
-          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4"
-          role="alert"
-        >
-          {error}
-        </div>
-      )}
-
       <form
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         disabled={loading}
       >
         <div className="grid grid-cols-2 gap-4">
-          {/* Name Input */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Name
@@ -143,7 +142,6 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
             </label>
           </div>
 
-          {/* Email Input */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Email
@@ -162,7 +160,6 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
             </label>
           </div>
 
-          {/* Phone Input */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Phone
@@ -181,7 +178,6 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
             </label>
           </div>
 
-          {/* Department Input */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Department
@@ -208,7 +204,6 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
             </label>
           </div>
 
-          {/* Date of Birth Input */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Date of Birth
@@ -227,7 +222,6 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
             </label>
           </div>
 
-          {/* Salary Input */}
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2">
               Salary
@@ -247,21 +241,21 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
           </div>
         </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 ${
-            loading ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {loading
-            ? isEditing
-              ? "Updating..."
-              : "Adding..."
-            : isEditing
-            ? "Update Employee"
-            : "Add Employee"}
-        </button>
+        <div className="flex items-center justify-between mt-4">
+          <button 
+            type="submit" 
+            className="bg-blue-500 text-white font-bold py-2 px-4 rounded"
+          >
+            {isEditing ? "Update Employee" : "Add Employee"}
+          </button>
+          <button 
+            type="button" 
+            onClick={resetForm}
+            className="bg-gray-500 text-white font-bold py-2 px-4 rounded"
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </div>
   );

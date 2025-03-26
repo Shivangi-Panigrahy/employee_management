@@ -11,7 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
 app.use("/api/employees", employeeRoutes);
 app.use("/api/stats", statsRoutes);
 app.use("/api/departments", departmentRoutes);

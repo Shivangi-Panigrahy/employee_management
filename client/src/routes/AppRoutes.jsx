@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import EmployeesPage from "../pages/EmployeesPage";
 import StatisticsPage from "../pages/StatisticsPage";
 import Layout from "../components/layout/Layout";
-import Statistics from "../components/Statistics";
+import Statistics from "../components/Statistics/Statistics";
 
 const AppRoutes = () => {
   return (
@@ -11,7 +11,7 @@ const AppRoutes = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<EmployeesPage />} />
-          <Route path="/statistics" element={<Statistics />} />
+          <Route path="/statistics" element={<StatisticsPage />} />
         </Routes>
       </Layout>
     </Router>

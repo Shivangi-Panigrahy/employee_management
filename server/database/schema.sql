@@ -48,7 +48,18 @@ INSERT INTO employees (
 (2, 'Jane Smith', '1988-08-22', '9876543210', 'jane.smith@example.com', 65000, NULL),
 (3, 'Mike Johnson', '1985-03-10', '5555555555', 'mike.johnson@example.com', 85000, NULL),
 (4, 'Emily Brown', '1992-11-30', '7777777777', 'emily.brown@example.com', 60000, NULL),
-(5, 'David Wilson', '1987-06-25', '4444444444', 'david.wilson@example.com', 70000, NULL);
+(5, 'David Wilson', '1987-06-25', '4444444444', 'david.wilson@example.com', 70000, NULL),
+(6, 'Sophia Martinez', '1995-07-19', '6666666666', 'sophia.martinez@example.com', 72000, NULL),
+(1, 'Daniel Lee', '1993-02-14', '3333333333', 'daniel.lee@example.com', 120000, NULL),
+(2, 'Olivia Taylor', '1991-09-08', '2222222222', 'olivia.taylor@example.com', 68000, NULL),
+(3, 'Ethan Clark', '1989-12-01', '9999999999', 'ethan.clark@example.com', 90000, NULL),
+(4, 'Ava White', '1994-04-05', '8888888888', 'ava.white@example.com', 75000, NULL),
+(5, 'Noah Harris', '1996-03-21', '7771234567', 'noah.harris@example.com', 65000, NULL),
+(6, 'Liam Young', '1983-10-10', '5556781234', 'liam.young@example.com', 95000, NULL),
+(1, 'Emma King', '1986-07-07', '4445678901', 'emma.king@example.com', 88000, NULL),
+(2, 'William Scott', '1982-11-15', '3334567890', 'william.scott@example.com', 98000, NULL),
+(3, 'Charlotte Green', '1997-08-25', '2223456789', 'charlotte.green@example.com', 62000, NULL);
+
 
 -- Create View for Employee Statistics
 CREATE VIEW employee_stats AS

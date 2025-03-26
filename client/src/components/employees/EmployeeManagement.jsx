@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchEmployees } from "../../features/Slice/employeeSlice";
+import { fetchEmployees } from "../../redux/slice/employeeSlice";
 import EmployeeForm from "./EmployeeForm";
 import EmployeeTable from "./EmployeeTable";
 
@@ -18,7 +18,6 @@ function EmployeeManagement() {
   };
 
   const handleFormSubmit = () => {
-    // Reset selected employee after form submission
     setSelectedEmployee(null);
   };
 

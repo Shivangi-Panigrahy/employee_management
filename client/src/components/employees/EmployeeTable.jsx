@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EditIcon, TrashIcon } from "lucide-react";
-import { deleteEmployee } from "../../features/Slice/employeeSlice";
+import { deleteEmployee } from "../../redux/slice/employeeSlice";
 
 function EmployeeTable({ onEditEmployee, setPage }) {
   const dispatch = useDispatch();
@@ -17,7 +17,6 @@ function EmployeeTable({ onEditEmployee, setPage }) {
 
   return (
     <div>
-      {/* Employee Grid */}
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white">
           <thead>
@@ -54,7 +53,6 @@ function EmployeeTable({ onEditEmployee, setPage }) {
         </table>
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-center mt-4 space-x-2">
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
           <button

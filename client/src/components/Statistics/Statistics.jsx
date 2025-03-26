@@ -4,7 +4,7 @@ import {
   fetchDepartmentSalaries, 
   fetchSalaryRanges, 
   fetchYoungestEmployees 
-} from '../features/Slice/statsSlice';
+} from '../../redux/slice/statsSlice';
 import { 
   BarChart, 
   Bar, 
@@ -31,15 +31,13 @@ function Statistics() {
     dispatch(fetchYoungestEmployees());
   }, [dispatch]);
 
-  // Colors for charts
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
   return (
     <div className="container mx-auto p-4 grid grid-cols-1 md:grid-cols-2 gap-8">
-      {/* Department Highest Salaries Bar Chart */}
       <div className="bg-white shadow-md rounded p-4">
         <h2 className="text-xl font-bold mb-4">Department Highest Salaries</h2>
-        <BarChart width={500} height={300} data={departmentSalaries}>
+        <BarChart width={700} height={300} data={departmentSalaries}>
           <XAxis dataKey="department" />
           <YAxis />
           <Tooltip />
