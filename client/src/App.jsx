@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './redux/store';
+
 
 // Import components
 import EmployeeManagement from './components/EmployeeManagement';
@@ -9,7 +8,6 @@ import Statistics from './components/Statistics';
 
 function App() {
   return (
-    <Provider store={store}>
       <Router>
         <div className="min-h-screen bg-gray-100">
           <nav className="bg-blue-600 text-white p-4">
@@ -40,7 +38,6 @@ function App() {
           </div>
         </div>
       </Router>
-    </Provider>
   );
 }
 

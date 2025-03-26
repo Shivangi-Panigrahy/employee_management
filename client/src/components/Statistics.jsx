@@ -4,7 +4,7 @@ import {
   fetchDepartmentSalaries, 
   fetchSalaryRanges, 
   fetchYoungestEmployees 
-} from '../redux/actions/statsActions';
+} from '../features/Slice/statsSlice';
 import { 
   BarChart, 
   Bar, 

@@ -1,6 +1,4 @@
--- Create Database
-CREATE DATABASE employee_management;
-USE employee_management;
+
 
 -- Create Departments Table
 CREATE TABLE departments (
@@ -82,10 +80,7 @@ BEGIN
     GROUP BY salary_range
     ORDER BY salary_range;
 END //
-DELIMITER ;
 
--- Stored Procedure for Youngest Employees by Department
-DELIMITER //
 CREATE PROCEDURE GetYoungestEmployeesByDepartment()
 BEGIN
     SELECT 
@@ -102,4 +97,5 @@ BEGIN
     JOIN employees e ON e.department_id = youngest.department_id AND e.dob = youngest.youngest_dob
     JOIN departments d ON d.id = e.department_id;
 END //
+
 DELIMITER ;
