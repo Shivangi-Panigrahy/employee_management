@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmployee, updateEmployee } from "../features/Slice/employeeSlice";
-import { fetchDepartments } from "../features/Slice/departmentSlice";
+import {
+  addEmployee,
+  updateEmployee,
+} from "../../features/Slice/employeeSlice";
+import { fetchDepartments } from "../../features/Slice/departmentSlice";
 
 function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
   const dispatch = useDispatch();

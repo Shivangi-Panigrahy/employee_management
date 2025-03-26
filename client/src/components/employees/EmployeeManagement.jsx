@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchEmployees } from '../features/Slice/employeeSlice';
-import EmployeeForm from './EmployeeForm';
-import EmployeeTable from './EmployeeTable';
+import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchEmployees } from "../../features/Slice/employeeSlice";
+import EmployeeForm from "./EmployeeForm";
+import EmployeeTable from "./EmployeeTable";
 
 function EmployeeManagement() {
   const dispatch = useDispatch();
@@ -24,16 +24,16 @@ function EmployeeManagement() {
 
   return (
     <div className="container mx-auto p-4">
-      <EmployeeForm 
-        initialData={selectedEmployee || {}} 
+      <EmployeeForm
+        initialData={selectedEmployee || {}}
         isEditing={!!selectedEmployee}
         onFormSubmit={handleFormSubmit}
       />
 
-      <EmployeeTable 
-        onEditEmployee={handleEditEmployee} 
-        page={page} 
-        setPage={setPage} 
+      <EmployeeTable
+        onEditEmployee={handleEditEmployee}
+        page={page}
+        setPage={setPage}
       />
     </div>
   );

@@ -1,14 +1,16 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { EditIcon, TrashIcon } from 'lucide-react';
-import { deleteEmployee } from '../features/Slice/employeeSlice';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { EditIcon, TrashIcon } from "lucide-react";
+import { deleteEmployee } from "../../features/Slice/employeeSlice";
 
 function EmployeeTable({ onEditEmployee, setPage }) {
   const dispatch = useDispatch();
-  const { employees, totalPages, currentPage } = useSelector(state => state.employees);
+  const { employees, totalPages, currentPage } = useSelector(
+    (state) => state.employees
+  );
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this employee?')) {
+    if (window.confirm("Are you sure you want to delete this employee?")) {
       await dispatch(deleteEmployee(id));
     }
   };
@@ -32,13 +34,13 @@ function EmployeeTable({ onEditEmployee, setPage }) {
                 <td className="border px-4 py-2">{employee.email}</td>
                 <td className="border px-4 py-2">
                   <div className="flex space-x-2">
-                    <button 
+                    <button
                       onClick={() => onEditEmployee(employee)}
                       className="text-blue-500 hover:text-blue-700"
                     >
                       <EditIcon />
                     </button>
-                    <button 
+                    <button
                       onClick={() => handleDelete(employee.id)}
                       className="text-red-500 hover:text-red-700"
                     >
@@ -54,14 +56,14 @@ function EmployeeTable({ onEditEmployee, setPage }) {
 
       {/* Pagination */}
       <div className="flex justify-center mt-4 space-x-2">
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map(pageNum => (
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
           <button
             key={pageNum}
             onClick={() => setPage(pageNum)}
             className={`px-4 py-2 rounded ${
-              pageNum === currentPage 
-                ? 'bg-blue-500 text-white' 
-                : 'bg-gray-200 text-gray-700'
+              pageNum === currentPage
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 text-gray-700"
             }`}
           >
             {pageNum}
