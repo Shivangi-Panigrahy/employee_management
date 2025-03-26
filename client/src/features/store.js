@@ -1,17 +1,12 @@
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import employeeReducer from './reducers/employeeReducer';
-import statsReducer from './reducers/statsReducer';
+import { configureStore } from '@reduxjs/toolkit';
+import employeeReducer from './Slice/employeeSlice';
+import statsReducer from './Slice/statsSlice';
 
-const rootReducer = combineReducers({
-    employees: employeeReducer,
-    stats: statsReducer
+const store = configureStore({
+    reducer: {
+        employees: employeeReducer,
+        stats: statsReducer
+    }
 });
-
-const store = createStore(
-    rootReducer, 
-    composeWithDevTools(applyMiddleware(thunk))
-);
 
 export default store;
