@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addEmployee, updateEmployee } from '../features/Slice/employeeSlice';
 
 function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
   const dispatch = useDispatch();
+  const { loading, error } = useSelector(state => state.employees);
   const [formData, setFormData] = useState({
     id: null,
     name: '',
@@ -108,9 +109,18 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
   };
 
   return (
+    <div>
+    {/* Error message display */}
+    {error && (
+      <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+        {error}
+      </div>
+    )}
+
     <form 
       onSubmit={handleSubmit} 
       className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      disabled={loading}
     >
       <div className="grid grid-cols-2 gap-4">
         {/* Name Input */}
@@ -235,11 +245,15 @@ function EmployeeForm({ initialData = {}, isEditing = false, onFormSubmit }) {
 
       <button 
         type="submit" 
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+        disabled={loading}
+        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 ${
+            loading ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
       >
-        {isEditing ? 'Update Employee' : 'Add Employee'}
+         {loading ? (isEditing ? 'Updating...' : 'Adding...') : (isEditing ? 'Update Employee' : 'Add Employee')}
       </button>
     </form>
+    </div>
   );
 }
 
